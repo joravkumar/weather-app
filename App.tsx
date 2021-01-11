@@ -1,14 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import Weather from './components/Weather/Weather';
 
 export default function App() {
-  const [count, setCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <View style={styles.container}>
-      <Text>Weather App!</Text>
-      <Button title="Click Me" onPress={() => setCount(count + 1)} />
-      <Text>{count}</Text>
+      {isLoading ? (
+        <View>
+          <ActivityIndicator />
+          <Text style={styles.fetchingContainer}>Fetching the Weather...</Text>
+        </View>
+      ) : (
+        <Weather />
+      )}
       <StatusBar style="auto" />
     </View>
   );
@@ -21,4 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  fetchingContainer: {
+    marginTop: 15
+  }
 });
